@@ -295,7 +295,7 @@
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: url('https://images.unsplash.com/photo-1523983388178-61b2cb4d62f8?auto=format&fit=crop&w=1920&q=80') center/cover;
+            background: url('https://www.hasicovo.cz/ver/20240416103101/variant/article/2024/04/img_8036-20240416-101941/motive-article-detail-desktop.webp') center/cover;
             opacity: 0.12;
             filter: saturate(0.4) brightness(0.3);
             transition: transform 0.1s linear;
@@ -421,75 +421,7 @@
             transform: translateY(-2px);
         }
 
-        /* ===== TRUCK DIVIDER ===== */
-        .truck-divider {
-            height: 80px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            background: var(--dark-2);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .truck-divider .stripe {
-            position: absolute;
-            top: 50%;
-            left: 0; right: 0;
-            height: 3px;
-            background: repeating-linear-gradient(90deg, var(--accent-2) 0px, var(--accent-2) 20px, transparent 20px, transparent 40px, var(--accent) 40px, var(--accent) 60px, transparent 60px, transparent 80px);
-            opacity: 0.3;
-            transition: background var(--transition-theme);
-        }
-
-        .truck-divider .truck {
-            position: absolute;
-            font-size: 2.5rem;
-            animation: truck-drive 10s linear infinite;
-            filter: drop-shadow(0 0 10px var(--glow));
-            cursor: pointer;
-            transition: transform 0.3s, filter var(--transition-theme);
-        }
-
-        .truck-divider .truck:hover {
-            transform: scale(1.3);
-            filter: drop-shadow(0 0 20px var(--glow));
-        }
-
-        @keyframes truck-drive {
-            0% { transform: translateX(-100px); }
-            100% { transform: translateX(calc(100vw + 100px)); }
-        }
-
-        .truck-divider .lights-left,
-        .truck-divider .lights-right {
-            position: absolute;
-            top: 50%;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            transform: translateY(-50%);
-        }
-
-        .truck-divider .lights-left {
-            left: 30px;
-            background: #ef4444;
-            animation: light-blink 0.5s steps(2) infinite;
-            box-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444;
-        }
-
-        .truck-divider .lights-right {
-            right: 30px;
-            background: #3b82f6;
-            animation: light-blink 0.5s steps(2) infinite 0.25s;
-            box-shadow: 0 0 15px #3b82f6, 0 0 30px #3b82f6;
-        }
-
-        @keyframes light-blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.2; }
-        }
+ 
 
         /* ===== SECTIONS ===== */
         section { padding: 100px 24px; position: relative; z-index: 1; }
@@ -729,15 +661,41 @@
 
         .about-text p { color: var(--text-muted); margin-bottom: 18px; font-size: 1rem; line-height: 1.8; }
 
-        .about-visual {
-            position: relative;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            aspect-ratio: 4/3;
-            border: 1px solid var(--accent);
-            box-shadow: 0 0 40px var(--glow-soft);
-            transition: border-color var(--transition-theme), box-shadow var(--transition-theme);
-        }
+       .about-visual {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 40px var(--glow-soft);
+    transition: border-color var(--transition-theme), box-shadow var(--transition-theme);
+}
+
+.about-visual::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        135deg,
+        transparent 40%,
+        rgba(255,255,255,0.08) 45%,
+        rgba(255,255,255,0.15) 50%,
+        rgba(255,255,255,0.08) 55%,
+        transparent 60%
+    );
+    transform: translateX(-100%) translateY(-100%);
+    animation: shine-sweep 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes shine-sweep {
+    0% { transform: translateX(-100%) translateY(-100%); }
+    50% { transform: translateX(0%) translateY(0%); }
+    100% { transform: translateX(100%) translateY(100%); }
+}   
 
         .about-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -852,13 +810,14 @@
 
         .lightbox.active { opacity: 1; pointer-events: all; }
 
-        .lightbox-content {
-            max-width: 900px;
-            width: 90%;
-            position: relative;
-            transform: scale(0.8) translateY(30px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+.lightbox-content img {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    background: var(--dark-3);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.8), 0 0 40px var(--glow-soft);
+}   
 
         .lightbox.active .lightbox-content { transform: scale(1) translateY(0); }
 
@@ -974,17 +933,16 @@
             gap: 16px;
         }
 
-        .gallery-item {
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 4/3;
-            border: 1px solid var(--glass-border);
-            transform-style: preserve-3d;
-            perspective: 800px;
-            will-change: transform;
-            transition: box-shadow 0.3s;
-        }
+.gallery-item {
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3/2;
+    transform-style: preserve-3d;
+    perspective: 800px;
+    will-change: transform;
+    transition: box-shadow 0.3s;
+}    
 
         .gallery-item:hover {
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px var(--glow-soft);
@@ -1167,6 +1125,46 @@
             .gallery-grid { grid-template-columns: 1fr; }
             .stats-row { grid-template-columns: 1fr 1fr; }
         }
+        .led-divider {
+    height: 4px;
+    position: relative;
+    background: var(--dark-2);
+    overflow: hidden;
+}
+
+.led-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%;
+    background: linear-gradient(90deg, transparent, #ef4444, #3b82f6, #ef4444, transparent);
+    filter: blur(1px);
+    animation: led-sweep 3s linear infinite;
+}
+
+.led-strip::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: inherit;
+    filter: blur(6px);
+    opacity: 0.6;
+}
+
+@keyframes led-sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+}   
+
+.float-anim {
+    animation: float-bob 4s ease-in-out infinite;
+}
+
+@keyframes float-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}   
     </style>
 </head>
 <body>
@@ -1191,15 +1189,7 @@
                 <div class="shield">🔥</div>
                 <div class="text">SDH Chabařovice<small>Sbor dobrovolných hasičů</small></div>
             </a>
-            <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
-            <ul class="nav-links">
-                <li><a href="#uvod">Úvod</a></li>
-                <li><a href="#akce">Akce</a></li>
-                <li><a href="#galerie">Galerie</a></li>
-                <li><a href="#technika">Technika</a></li>
-                <li><a href="#spoluprace">Spolupráce</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
+
         </div>
     </nav>
 
@@ -1208,32 +1198,44 @@
         <div class="hero-bg" id="heroBg"></div>
         <div class="hero-content">
             <div class="hero-badge">
-                <span class="dot"></span>
-                Aktivní sbor · 23 členů · 24/7
+              
             </div>
             <h1>Sbor dobrovolných<br>hasičů Chabařovice</h1>
-            <p class="subtitle">Ochrana života, zdraví a majetku obyvatel Chabařovic, Roudníků a Přestanova. Služíme s odvahou a oddaností.</p>
+            <p class="subtitle">Ochrana života, zdraví a majetku obyvatel Chabařovic, Roudníků, Přestanova a ostatních. Sloužíme s odvahou a oddaností.</p>
             <div class="hero-actions">
-                <a href="#akce" class="btn btn-fire">🔥 Poslední akce</a>
+             
                 <a href="#kontakt" class="btn btn-outline">📞 Kontakt</a>
             </div>
         </div>
     </section>
 
-    <!-- TRUCK DIVIDER -->
-    <div class="truck-divider">
-        <div class="stripe"></div>
-        <div class="lights-left"></div>
-        <div class="lights-right"></div>
-        <span class="truck" onclick="openLightbox()">🚒</span>
+ <!-- LIGHT DIVIDER -->
+<div class="light-divider">
+    <div class="light-line"></div>
+    <div class="light-unit left">
+        <div class="light-bulb red"></div>
+        <div class="light-bulb red delay-1"></div>
     </div>
+    <div class="light-unit center">
+        <div class="light-bulb red"></div>
+        <div class="light-bulb blue"></div>
+    </div>
+    <div class="light-unit right">
+        <div class="light-bulb blue"></div>
+        <div class="light-bulb red delay-1"></div>
+    </div>
+</div>   
+<!-- LED STRIP DIVIDER -->
+<div class="led-divider">
+    <div class="led-strip"></div>
+</div>   
 
     <!-- STATS -->
     <section style="padding-top: 80px;">
         <div class="container">
             <div class="stats-row">
                 <div class="stat-item reveal">
-                    <div class="stat-number">23</div>
+                    <div class="stat-number">???+</div>
                     <div class="stat-label">Aktivních hasičů</div>
                 </div>
                 <div class="stat-item reveal">
@@ -1245,7 +1247,7 @@
                     <div class="stat-label">Let tradice</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number">6+</div>
+                    <div class="stat-number">???+</div>
                     <div class="stat-label">Mladých hasičů</div>
                 </div>
             </div>
@@ -1257,8 +1259,8 @@
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-label">🔥 Aktuality</span>
-                <h2 class="section-title">Poslední akce</h2>
-                <p class="section-desc">Přehled nejnovějších událostí a akcí našeho sboru.</p>
+                <h2 class="section-title">VÝZNAMNÉ AKCE</h2>
+                <p class="section-desc">Přehled jednich z nejvýznamějších událostí a akcí našeho sboru.</p>
             </div>
             <div class="cards-grid">
                 <div class="card tilt-card reveal">
@@ -1276,7 +1278,7 @@
                 </div>
                 <div class="card tilt-card reveal">
                     <div class="card-img-wrapper">
-                        <img class="card-img" src="https://www.hasicovo.cz/file/edee/2024/04/img_8036.jpg" alt="Nová CASka" onerror="this.parentElement.classList.add('img-error')">
+                        <img class="card-img" src="https://scontent-prg1-1.xx.fbcdn.net/v/t39.30808-6/495087720_546762438480105_2431932541366265242_n.jpg?stp=dst-jpg_tt6&cstp=mx1600x1200&ctp=s1600x1200&_nc_cat=108&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=xcHjPCappegQ7kNvwE8UKTq&_nc_oc=AdpSX4z3UNv3k-gqMZ6EsBD6WKAuTIV3u8fRXmM3RuV_VhN3eV3puCi5EKgWZ0ieqAE&_nc_zt=23&_nc_ht=scontent-prg1-1.xx&_nc_gid=pbx8BCDvuVfTD2HzxPiIuw&_nc_ss=7b2a8&oh=00_AQMNIytCA1IifjqfqUzg0LQ8tDKfpVo0UQzUT0iMOZesQA&oe=6AC6E075" alt="Nová CASka" onerror="this.parentElement.classList.add('img-error')">
                         <div class="fallback">🚒</div>
                         <div class="card-overlay"></div>
                     </div>
@@ -1328,15 +1330,15 @@
                 </div>
                 <div class="card tilt-card reveal">
                     <div class="card-img-wrapper">
-                        <img class="card-img" src="https://images.unsplash.com/photo-1601133480926-418c29630046?auto=format&fit=crop&w=800&q=80" alt="Ples" onerror="this.parentElement.classList.add('img-error')">
+                        <img class="card-img" src="https://scontent-prg1-1.xx.fbcdn.net/v/t39.30808-6/651705400_10224894679513854_4849319700707858874_n.jpg?stp=dst-jpg_tt6&cstp=mx2312x965&ctp=s2312x965&_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=Q-40klyzL9sQ7kNvwGLe5Eo&_nc_oc=AdoVnSCCFLAx854yqCzqv60gJX06yeqad5Xt5_yWXe7ra6BhNFB3AJz3Rb7RUjmi2ow&_nc_zt=23&_nc_ht=scontent-prg1-1.xx&_nc_gid=QhH_V83T-wKXEMGkyZPOFQ&_nc_ss=7b2a8&oh=00_AQM-a7HaIWIbZvQC-hyqtITrUNjJUDO_WXrdn0imMIWEAw&oe=6AC6F7BB" alt="Ples" onerror="this.parentElement.classList.add('img-error')">
                         <div class="fallback">🎭</div>
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-body">
                         <span class="card-tag">Společenské</span>
                         <h3>Ples města Chabařovice</h3>
-                        <p>Tradiční ples města Chabařovice, který hasiči zajišťují včetně požární asistence. Společenská událost pro celé město.</p>
-                        <div class="card-date">📅 Únor 2026</div>
+                        <p>Tradiční hasičský ples, který pořádají hasiči v Chabařovicích každý rok.</p>
+                        <div class="card-date">📅2026</div>
                     </div>
                 </div>
             </div>
@@ -1354,8 +1356,8 @@
                     <p>SDH pořádá různé akce pro děti, vede kroužky pro děti a mládež včetně přípravky od 6 let věku. Starostou SDH je p. <strong>Libor Verner</strong>, velitelem sboru je p. <strong>Rudolf Beneda</strong>.</p>
                     <p>Naše hasičská zbrojnice je k dispozici 24 hodin denně. V případě nouze volejte <strong style="color: var(--accent); font-size: 1.2rem; transition: color var(--transition-theme);">150</strong>.</p>
                 </div>
-                <div class="about-visual tilt-card reveal">
-                    <img  style=" padding-left: 90px; height: 430px; width: 450px;" src="C:\Users\libor\Downloads\znak_SDH_Chabařovice-removebg-preview.png" alt="Hasiči" onerror="this.parentElement.classList.add('img-error')">
+              <div class="about-visual float-anim tilt-card reveal">
+                    <img  style=" padding-left: 110px; height: 430px; width: 450px;" src="C:\Users\libor\Downloads\znak_SDH_Chabařovice-removebg-preview.png" alt="Hasiči" onerror="this.parentElement.classList.add('img-error')">
                     <div class="fallback">🚒</div>
                 </div>
             </div>
@@ -1616,7 +1618,7 @@
         // ===== LIGHTBOX =====
         function openLightbox(src, caption) {
             if (!src) {
-                src = 'https://images.unsplash.com/photo-1580983218765-f663bec07b37?auto=format&fit=crop&w=1200&q=80';
+                src = 'https://www.hasicovo.cz/variant/resize-wysiwyg/1024/2024/04/img_8039-20240416-102552.jpg';
                 caption = 'Hasičské vozidlo SDH Chabařovice';
             }
             const lightbox = document.getElementById('lightbox');
@@ -1638,15 +1640,22 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // ===== SMOOTH SCROLL =====
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                const target = document.querySelector(a.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                document.querySelector('.nav-links').classList.remove('active');
-            });
-        });
+     // ===== SMOOTH SCROLL (s offsetem pro navbar) =====
+const NAV_OFFSET = 70; // výška navbaru
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+
+        const top = target.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+        window.scrollTo({ top, behavior: 'smooth' });
+
+        // Zavřít mobilní menu
+        document.querySelector('.nav-links')?.classList.remove('active');
+    });
+});   
     </script>
 </body>
 </html>   
